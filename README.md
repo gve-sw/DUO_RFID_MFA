@@ -123,9 +123,9 @@ note: make sure to update the keys for DUO in the code and export a variable for
 3. pin is genrated and sent trough webexteams
 3. user is grandted access using a PIN code
 
-![setup photo][setup]
 
-[setup]:./setup.jpg "setup photo"
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=NgMu5lcIi9Y
+" target="_blank"><img src="http://img.youtube.com/vi/NgMu5lcIi9Y/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
-TODO : video 
 
