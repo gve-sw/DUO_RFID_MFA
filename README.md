@@ -1,16 +1,17 @@
-# MFA for physical access controle with CISCO DUO
-This is a use case for using CISCO DUO APIs to bring Multifactor Authentication to protect access controle in difrent setup, this prototype uses a simple RFID reader on a RaspberyPI to emulate the user experiance.
-When the user would present an RFID tage to the reader, the user will get a push notification from CISCO DUO to authorise the access befeore access is granted.
+# Multifactor Authentication (MFA) for physical access control with Cisco Duo
 
+This is a use case for using Cisco Duo APIs to bring Multifactor Authentication (MFA) to protect access control in different setup, this prototype uses a simple RFID reader on a Raspberry Pi to emulate the user experience.
+When the user presents an RFID tag to the reader, the user will get a push notification from Cisco Duo to authorise the access before access is granted.
 
-## Install:
+## Install
 
-#### Clone the repo :
+#### Clone the repo
+
 ```
 $ git clone https://github.com/gve-sw/DNAC_usecase
 ```
 
-#### Install dependencies :
+#### Install dependencies
 
 ```
 $ pip install pad4pi
@@ -20,26 +21,32 @@ $ pip install mfrc522
 $ pip install RPi.GPIO
 ```
 
-## software Setup:
+## Software Setup
 
-Before starting to play with this prototype you need to create accounts in CISCO DUO & WebExTeams and get the relevent credentials:
-#### DUO  :
-you can create a free account for 10 users at duo, follow [this](https://duo.com/pricing/duo-free) link for details, for this project we are using the DUO Auth API, you can find documentation [here](https://duo.com/docs/authapi), the documentation will guide you through the creation of an application protection for our RFID client, once created you can copy the application keys to export as envirenemnt variables.
+Before starting to play with this prototype you need to create accounts in Cisco Duo & Webex Teams and get the relevant credentials.
+
+#### Duo
+
+You can create a free account for 10 users at Duo, follow [this link](https://duo.com/pricing/duo-free) for details. For this project we are using the Duo Auth API, you can find documentation [here](https://duo.com/docs/authapi). The documentation will guide you through the creation of an application protection for our RFID client. Once created you can copy the application keys to export as environment variables.
 
 ```
 $ export ikey='your  Integration key (DI...)'
 $ export skey='your Secret key'
 $ export host='your API hostname (api-....duosecurity.com)'
 ```
-Create a user from the DUO admin panel, with the name 'test' this same username will be used in the RFID tag
 
+Create a user from the Duo admin panel, with the name 'test' this same username will be used in the RFID tag.
 
-#### webex :
-you can create a free account in webexteams here, once created you can follow the documentation here to create your first BOT, take note of the bot token as it will need to put it in an envirenemnt variable:
+#### Webex Teams
+
+You can create a free account in Webex Teams here. Once created you can follow the documentation here to create your first BOT, take note of the bot token as it will need to put it in an environment variable:
+
 ```
 $ export WEBEX_TEAMS_ACCESS_TOKEN="Your webexteams bot token here"
 ```
-update the code with your email address:
+
+Update the code with your own email address:
+
 ```python
 		# Add people to the new demo room
 		try:
@@ -50,17 +57,20 @@ update the code with your email address:
 			print(e)
 ```
 
-## hardware setup 
+## Hardware setup 
 
-this project is run on a Raspbery pi 3 model B with the Rasbian os, you can find domcnyation here on how to setup your raspberry pi, in addtion you will need the folwing :
-- 3 LED (red,green,blue)
-- 3 100 resistance
+This project is run on a Raspberry Pi 3 model B with Raspbian OS. You can find documentation here on how to setup your Raspberry Pi. In addtion you will need the following:
+
+- 3x LED (red, green, blue)
+- 3x 100 resistance
 - Raspberry Pi 4X4 Keypad
 - Raspberry Pi RFID RC522 Reader
 - RFID tags
 
-#### keypad 
-the keypad used here is a 4x4 you can use a 3x4 keypad by change the keypad matrix, you can find [here](https://learn.adafruit.com/matrix-keypad/python-circuitpython) more details on teh matrix and wiring 
+#### Keypad 
+
+The keypad used here is a 4x4, but you can use a 3x4 keypad by changing the keypad matrix. You can find [here](https://learn.adafruit.com/matrix-keypad/python-circuitpython) more details on the matrix and wiring .
+
 ```python
 # Setup Keypad
 KEYPAD = [
@@ -74,59 +84,68 @@ KEYPAD = [
 ROW_PINS = [5, 13, 19, 26] # BCM numbering
 COL_PINS = [12, 16, 20, 21] # BCM numbering
 ```
-you can test your keypad using keypadtest.py
+You can test your keypad using the [keypadtest.py](./keypadtest.py) file.
 
 #### RFID 
-the RFID reader used in this project is very comun RC522, you can use [rfidwrite.py](./rfidwrite.py) file and [rfidread.py](./rfidread.py)  to write the username in your rfid tags, follow this tutorial for more details [here](https://medium.com/coinmonks/for-beginners-how-to-set-up-a-raspberry-pi-rfid-rc522-reader-and-record-data-on-iota-865f67843a2d 
 
-make sure that the  username you are writing on the rfid is the same user you created in your DUO account.
+The RFID reader used in this project is the common RC522. Uou can use [rfidwrite.py](./rfidwrite.py) file and [rfidread.py](./rfidread.py) to write the username in your RFID tags. Follow [this tutorial](https://medium.com/coinmonks/for-beginners-how-to-set-up-a-raspberry-pi-rfid-rc522-reader-and-record-data-on-iota-865f67843a2d) for more details.
 
-#### leds 
-the leds are showing notifications of what is hapning with the demo here is how to read those, the leds need to be wired 
-Green blinking : access granted 
-Red blinking : Access denied
-Blue blinking : timout, use the keypad for pin
+Please make sure that the username you are writing on the RFID is the same user you created in your Duo account.
+
+#### Leds
+
+Leds will show notifications of what is happening with the demo, and here is how to read those. Leds need to be wired.
+
+* Green blinking : access granted 
+* Red blinking : access denied
+* Blue blinking : timeout, use the keypad for pin
 
 
-#### wireing
+#### Wiring
 
 ![Wiring photo][wiring]
 
 [wiring]:./wiring.jpg "Wiring photo"
 
 
-## Usage:
+## Usage
 
-run [duo_rfid.py](./duo_rfid.py) :
+run [duo_rfid.py](./duo_rfid.py)
+
 ```
 $ python duo_rfid.py 
 Hold a tag near the reader
 ```
-note: make sure to update the keys for DUO in the code and export a variable for webexteams token.
 
-### demo scneraos :
+Note: please make sure to update the keys for Duo in the code and export a variable for the Webex Teams token.
+
+### Demo scenarios
+
 ![Diagram flow photo][flow]
 
 [flow]:./flow.jpg "Diagram flow photo"
 
-#### standrad loging scenario with DUO app
-1. user put the rfid tag to the reader 
-2. user approve the DUO authorisation notification 
-3. user is grandted access
-#### enrolement of new user
-1. user presnt a new rfid tag to reader
-2. user is not grandted access
-3. Enrollemnt process is sent over webexteams for new user
-#### timout Duo auth, PIN code login 
-1. user put the rfid tag to the reader 
-2. DUO autorisation dosent happen (timout, connectivity ...)
-3. pin is genrated and sent trough webexteams
-3. user is grandted access using a PIN code
+#### Standard login scenario with Duo app
 
-### Video :
+1. User puts the RFID tag on the reader 
+2. User approves the Duo authorisation notification 
+3. User is granted access
+
+#### New user enrollment
+
+1. User presents a new RFID tag to reader
+2. User is not granted access
+3. Enrollment process is sent over Webex Teams for new user
+
+#### Timeout Duo auth, PIN code login 
+
+1. User puts the RFID tag on the reader 
+2. Duo autorisation does NOT happen (timeout, connectivity...)
+3. Pin is generated and sent through Webex Teams
+3. User is granted access using a PIN code
+
+### Video
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=NgMu5lcIi9Y
 " target="_blank"><img src="http://img.youtube.com/vi/NgMu5lcIi9Y/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
-
-
