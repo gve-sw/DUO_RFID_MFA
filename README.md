@@ -5,6 +5,12 @@ When the user presents an RFID tag to the reader, the user will get a push notif
 
 ## Install
 
+NOTE — please ensure both git and pip are installed in your environment by running the following command:
+```
+$ sudo apt-get -y install git python-pip
+```
+
+
 #### Clone the repo
 
 ```
@@ -45,7 +51,7 @@ You can create a free account in Webex Teams here. Once created you can follow t
 $ export WEBEX_TEAMS_ACCESS_TOKEN="Your webexteams bot token here"
 ```
 
-Update the code with your own email address:
+Update duo_rfid.py with your own email address:
 
 ```python
 		# Add people to the new demo room
