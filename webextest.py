@@ -1,7 +1,5 @@
 from webexteamssdk import WebexTeamsAPI
 
-#export WEBEX_TEAMS_ACCESS_TOKEN="ZjE1YTgwOTEtNjI3Ny00NDRlLWI3MWItNTY0M2JjNzQwYmZmMmNiYzVjZjgtZmQ2_PF84_1eb65fdf-9643-417f-9974-ad72cae0e10f"
-
 api = WebexTeamsAPI()
 
 # Find all rooms that have 'webexteamssdk Demo' in their title
